@@ -3,7 +3,6 @@ package xyz.practice.pingcrystal.listeners;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EnderCrystal;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -46,7 +45,7 @@ public class CrystalDamageListener implements Listener {
         if (!(event.getDamager() instanceof EnderCrystal crystal)) {
             return;
         }
-        if (!(event.getEntity() instanceof LivingEntity victim)) {
+        if (!(event.getEntity() instanceof Player victim)) {
             return;
         }
         if (victim.hasPermission("pingcrystal.exempt")) {
