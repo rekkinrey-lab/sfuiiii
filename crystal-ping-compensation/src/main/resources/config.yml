@@ -1,0 +1,52 @@
+# CrystalPingCompensation config
+#
+# What this does:
+# When a high-ping player detonates an end crystal, their client's view of the
+# world is always "ping" milliseconds behind the server. That means a victim
+# who dodges/moves in that window can slip out of the explosion radius on the
+# server even though, on the attacker's screen, the hit looked clean.
+#
+# This plugin keeps a short position history for every player and, when a
+# crystal explodes, rewinds the victim's position back by the attacker's ping
+# (capped) before recalculating the damage/knockback. This only ever helps the
+# attacker "catch up" to what they saw - it never punishes low-ping players.
+
+settings:
+  # Master toggle.
+  enabled: true
+
+  # Players below this ping (ms) get zero compensation. Keeps things fair for
+  # players on a normal connection.
+  min-ping-threshold-ms: 80
+
+  # Hard cap on how much compensation can ever be applied, regardless of
+  # actual ping. Prevents someone from abusing an artificially inflated ping.
+  max-compensation-ms: 250
+
+  # How long we keep position history per player. Should be >= max-compensation-ms.
+  # Larger values use a little more memory per online player.
+  history-window-ms: 500
+
+  # How much of the reported ping to use as the rewind delay.
+  # 1.0 = full ping, 0.5 = half ping (one-way latency estimate).
+  # 1.0 is recommended since both the attacker's input and the resulting
+  # explosion packet each cross the network once.
+  ping-compensation-factor: 1.0
+
+  # Cap on the damage/knockback multiplier that compensation can apply, so a
+  # rewind can never make a hit deal drastically more than a normal hit would.
+  max-damage-multiplier: 1.5
+
+  # Also rewind knockback direction/strength the same way as damage.
+  compensate-knockback: true
+
+bedrock:
+  # If Floodgate is installed, use it to identify Bedrock players.
+  use-floodgate-detection: true
+
+  # If the Geyser-Spigot plugin is installed, use its API to read the real
+  # RakNet ping for Bedrock players instead of the Java keep-alive ping
+  # Bukkit reports (which is often less accurate for Bedrock connections).
+  prefer-geyser-native-ping: true
+
+debug: false

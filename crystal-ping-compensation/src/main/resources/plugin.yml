@@ -1,0 +1,22 @@
+name: CrystalPingCompensation
+version: '1.0.0'
+main: xyz.practice.pingcrystal.PingCrystalPlugin
+api-version: '1.21'
+author: YourName
+description: Ping compensation for end-crystal PvP, including Bedrock players via Geyser/Floodgate.
+
+softdepend: [Floodgate, Geyser-Spigot]
+
+commands:
+  pingcrystal:
+    description: Manage the Crystal Ping Compensation plugin
+    usage: /pingcrystal <reload|status|toggle>
+    permission: pingcrystal.admin
+
+permissions:
+  pingcrystal.admin:
+    description: Allows managing the plugin
+    default: op
+  pingcrystal.exempt:
+    description: Players with this permission never get compensation applied against them
+    default: false
